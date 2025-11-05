@@ -1,0 +1,189 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>SetAccessChild与SetAccessNext分别是什么，有什么区别 | 镜中的幽灵小站</title><meta name="author" content="镜中的幽灵"><meta name="copyright" content="镜中的幽灵"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在 CATIA 二次开发中，SetAccessChild和SetAccessNext是两个用于构建用户界面元素（如工具条和菜单）的宏命令，它们用于添加和组织这些元素中的项目。这两个宏的主要区别在于它们在用户界面元素中的插入方式和位置。 SetAccessChildSetAccessChild宏用于将一个对象（如按钮、菜单项等）添加为另一个对象（如工具条、菜单等）的直接子项。这意味着使用SetAcc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SetAccessChild与SetAccessNext分别是什么，有什么区别">
+<meta property="og:url" content="https://mirror-ghost.netlify.app/2025/11/05/SetAccessChild%E4%B8%8ESetAccessNext%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB/index.html">
+<meta property="og:site_name" content="镜中的幽灵小站">
+<meta property="og:description" content="在 CATIA 二次开发中，SetAccessChild和SetAccessNext是两个用于构建用户界面元素（如工具条和菜单）的宏命令，它们用于添加和组织这些元素中的项目。这两个宏的主要区别在于它们在用户界面元素中的插入方式和位置。 SetAccessChildSetAccessChild宏用于将一个对象（如按钮、菜单项等）添加为另一个对象（如工具条、菜单等）的直接子项。这意味着使用SetAcc">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mirror-ghost.netlify.app/img/butterfly-icon.png">
+<meta property="article:published_time" content="2025-11-05T01:07:10.000Z">
+<meta property="article:modified_time" content="2025-11-05T01:13:11.533Z">
+<meta property="article:author" content="镜中的幽灵">
+<meta property="article:tag" content="CATIA CAA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mirror-ghost.netlify.app/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "SetAccessChild与SetAccessNext分别是什么，有什么区别",
+  "url": "https://mirror-ghost.netlify.app/2025/11/05/SetAccessChild%E4%B8%8ESetAccessNext%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB/",
+  "image": "https://mirror-ghost.netlify.app/img/butterfly-icon.png",
+  "datePublished": "2025-11-05T01:07:10.000Z",
+  "dateModified": "2025-11-05T01:13:11.533Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "镜中的幽灵",
+      "url": "https://mirror-ghost.netlify.app/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://mirror-ghost.netlify.app/2025/11/05/SetAccessChild%E4%B8%8ESetAccessNext%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'SetAccessChild与SetAccessNext分别是什么，有什么区别',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">镜中的幽灵小站</span></a><a class="nav-page-title" href="/"><span class="site-name">SetAccessChild与SetAccessNext分别是什么，有什么区别</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">SetAccessChild与SetAccessNext分别是什么，有什么区别</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-11-05T01:07:10.000Z" title="发表于 2025-11-05 09:07:10">2025-11-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-05T01:13:11.533Z" title="更新于 2025-11-05 09:13:11">2025-11-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>在 CATIA 二次开发中，<code>SetAccessChild</code>和<code>SetAccessNext</code>是两个用于构建用户界面元素（如工具条和菜单）的宏命令，它们用于添加和组织这些元素中的项目。这两个宏的主要区别在于它们在用户界面元素中的插入方式和位置。</p>
+<h3 id="SetAccessChild"><a href="#SetAccessChild" class="headerlink" title="SetAccessChild"></a>SetAccessChild</h3><p><code>SetAccessChild</code>宏用于将一个对象（如按钮、菜单项等）添加为另一个对象（如工具条、菜单等）的直接子项。这意味着使用<code>SetAccessChild</code>添加的对象会成为父对象的第一个子项。</p>
+<p><strong>语法示例</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">SetAccessChild</span>(parentObjectName, childObjectName);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>parentObjectName</strong>：父对象的名称。</li>
+<li><strong>childObjectName</strong>：要添加为子项的对象的名称。</li>
+</ul>
+<h3 id="SetAccessNext"><a href="#SetAccessNext" class="headerlink" title="SetAccessNext"></a>SetAccessNext</h3><p><code>SetAccessNext</code>宏用于在已存在的项目之后插入一个新项目。它将一个对象添加到另一个对象之后，作为下一个兄弟项。</p>
+<p><strong>语法示例</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">SetAccessNext</span>(previousObjectName, nextObjectName);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>previousObjectName</strong>：已存在的对象的名称，新对象将紧随其后。</li>
+<li><strong>nextObjectName</strong>：要插入的新对象的名称。</li>
+</ul>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><ul>
+<li><strong>插入位置</strong>：<code>SetAccessChild</code>总是在父对象的子项列表开头插入，而<code>SetAccessNext</code>则在指定对象之后插入。</li>
+<li><strong>父子关系</strong>：使用<code>SetAccessChild</code>的对象与父对象之间存在父子关系，而<code>SetAccessNext</code>创建的是兄弟关系。</li>
+<li><strong>使用场景</strong>：当你需要在某个容器的开始位置添加一个新元素时，使用<code>SetAccessChild</code>；当你需要在一系列元素中插入一个新元素时，使用<code>SetAccessNext</code>。</li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>假设你有一个工具条<code>pToolBar</code>和一个按钮<code>pButton1</code>，你想在这个按钮后面添加另一个按钮<code>pButton2</code>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建工具条和按钮</span></span><br><span class="line"><span class="built_in">NewAccess</span>(CATCmdContainer, pToolBar, ToolBar);</span><br><span class="line"><span class="built_in">NewAccess</span>(CATCmdStarter, pButton1, Button1);</span><br><span class="line"><span class="built_in">NewAccess</span>(CATCmdStarter, pButton2, Button2);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将按钮添加到工具条</span></span><br><span class="line"><span class="built_in">SetAccessChild</span>(pToolBar, pButton1);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在pButton1后面添加pButton2</span></span><br><span class="line"><span class="built_in">SetAccessNext</span>(pButton1, pButton2);</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>pButton1</code>首先被添加到<code>pToolBar</code>作为第一个子项，然后<code>pButton2</code>被添加为<code>pButton1</code>的下一个兄弟项，即紧随<code>pButton1</code>之后。</p>
+<p>通过这种方式，<code>SetAccessChild</code>和<code>SetAccessNext</code>提供了灵活的方法来组织和管理用户界面元素，使得开发者可以精确控制元素的布局和顺序。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://mirror-ghost.netlify.app/">镜中的幽灵</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://mirror-ghost.netlify.app/2025/11/05/SetAccessChild%E4%B8%8ESetAccessNext%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB/">https://mirror-ghost.netlify.app/2025/11/05/SetAccessChild与SetAccessNext分别是什么，有什么区别/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://mirror-ghost.netlify.app" target="_blank">镜中的幽灵小站</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CATIA-CAA/">CATIA CAA</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/11/05/AddToolbarView%E6%98%AF%E4%BB%80%E4%B9%88/" title="AddToolbarView是什么"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">AddToolbarView是什么</div></div><div class="info-2"><div class="info-item-1">AddToolbarView是 CATIA 二次开发中的一个函数，它用于将创建的工具条添加到 CATIA 的用户界面中。这个函数允许开发者将自定义的工具条显示在 CATIA 的工作区（workbench）中，使得用户可以直接访问这些工具条。 函数原型AddToolbarView的基本语法如下： 1AddToolbarView(CATCmdContainer* pToolbar, int viewId, int position);   pToolbar：要添加的工具条对象的指针。 viewId：视图的 ID，用于指定在哪个视图中显示工具条。 position：工具条的位置，可以是顶部、底部、左侧或右侧。  参数详解 viewId：这个参数指定了工具条应该显示在哪个视图中。通常，CATIA 中有多个视图，例如主视图、详细信息视图等。视图 ID 是一个整数，用于唯一标识一个视图。 position：这个参数指定了工具条在视图中的位置。可能的值包括： Left：左侧 Right：右侧 Top：顶部 Bottom：底部    示例假设你已经创建了一个工具条pMyToolbar，你想将它添...</div></div></div></a><a class="pagination-related" href="/2025/11/05/NewAccess%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8/" title="NewAccess是什么，如何使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">NewAccess是什么，如何使用</div></div><div class="info-2"><div class="info-item-1">NewAccess是 CATIA 二次开发中用于创建和访问 CATIA 对象的一个宏，它是 CAA（Component Application Architecture）编程环境中的一部分。NewAccess宏用于创建和初始化 CAA 框架中的对象，它通过 CAA 的宏机制简化了对象的创建和访问过程。 使用方法NewAccess的基本语法如下： 1NewAccess(ObjectType, objectName, objectAlias);   ObjectType：要创建的对象类型。 objectName：对象的名称，这个名称在代码中用于访问该对象。 objectAlias：对象的别名，通常用于在 CATIA 的用户界面中显示。  示例假设你想创建一个CATCmdStarter类型的对象，可以这样使用NewAccess： 1NewAccess(CATCmdStarter, pMyCommand, MyCommand);  这里，CATCmdStarter是对象类型，pMyCommand是在代码中用来访问这个对象的名称，MyCommand是这个命令的别名，它可能会在用户界面中显示...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/11/05/AddToolbarView%E6%98%AF%E4%BB%80%E4%B9%88/" title="AddToolbarView是什么"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-05</div><div class="info-item-2">AddToolbarView是什么</div></div><div class="info-2"><div class="info-item-1">AddToolbarView是 CATIA 二次开发中的一个函数，它用于将创建的工具条添加到 CATIA 的用户界面中。这个函数允许开发者将自定义的工具条显示在 CATIA 的工作区（workbench）中，使得用户可以直接访问这些工具条。 函数原型AddToolbarView的基本语法如下： 1AddToolbarView(CATCmdContainer* pToolbar, int viewId, int position);   pToolbar：要添加的工具条对象的指针。 viewId：视图的 ID，用于指定在哪个视图中显示工具条。 position：工具条的位置，可以是顶部、底部、左侧或右侧。  参数详解 viewId：这个参数指定了工具条应该显示在哪个视图中。通常，CATIA 中有多个视图，例如主视图、详细信息视图等。视图 ID 是一个整数，用于唯一标识一个视图。 position：这个参数指定了工具条在视图中的位置。可能的值包括： Left：左侧 Right：右侧 Top：顶部 Bottom：底部    示例假设你已经创建了一个工具条pMyToolbar，你想将它添...</div></div></div></a><a class="pagination-related" href="/2025/11/05/CATIGSMFactory/" title="CATIGSMFactory"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-05</div><div class="info-item-2">CATIGSMFactory</div></div><div class="info-2"><div class="info-item-1">CATIGSMFactory是CATIA CAA（Component Application Architecture，组件应用架构）中的一个接口，它提供了创建创成式外形设计（Generative Shape Design，简称GSM）车间所有几何元素的功能。 </div></div></div></a><a class="pagination-related" href="/2025/11/05/CATPathElementAgent/" title="CATPathElementAgent"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-05</div><div class="info-item-2">CATPathElementAgent</div></div><div class="info-2"><div class="info-item-1">‌CATPathElementAgent‌是一个用于获取元素（如点、线、面等）的代理类，属于CAA（CATIA Application Programming Interface）的一部分。它主要用于在CATIA中进行二次开发时，获取和处理设计模型中的几何元素。 功能和用途CATPathElementAgent的主要功能是获取设计模型中的几何元素，并允许开发者对这些元素进行操作。通过该代理类，可以实现对设计模型中元素的查询、选择、修改等操作。例如，可以通过该代理类获取设计模型中的点、线、面等几何元素，并进行相应的处理和分析‌。 创建和使用方法 ‌创建代理类实例‌：首先需要创建一个CATPathElementAgent的实例。 ‌设置选择元素类型‌：通过调用AddElementType方法，设置需要选择或操作的元素类型，例如点、线、面等。 ‌设置行为‌：可以通过调用SetBehavior方法，设置选择元素的行为，例如高亮显示或保持高亮显示等‌。  状态管理在CAA中，状态管理是一个重要的概念。状态可以理解为一个包含多个代理类的容器，当前状态为操作响应状态。通过状态跳转进行切换，以便...</div></div></div></a><a class="pagination-related" href="/2025/11/05/NewAccess%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8/" title="NewAccess是什么，如何使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-05</div><div class="info-item-2">NewAccess是什么，如何使用</div></div><div class="info-2"><div class="info-item-1">NewAccess是 CATIA 二次开发中用于创建和访问 CATIA 对象的一个宏，它是 CAA（Component Application Architecture）编程环境中的一部分。NewAccess宏用于创建和初始化 CAA 框架中的对象，它通过 CAA 的宏机制简化了对象的创建和访问过程。 使用方法NewAccess的基本语法如下： 1NewAccess(ObjectType, objectName, objectAlias);   ObjectType：要创建的对象类型。 objectName：对象的名称，这个名称在代码中用于访问该对象。 objectAlias：对象的别名，通常用于在 CATIA 的用户界面中显示。  示例假设你想创建一个CATCmdStarter类型的对象，可以这样使用NewAccess： 1NewAccess(CATCmdStarter, pMyCommand, MyCommand);  这里，CATCmdStarter是对象类型，pMyCommand是在代码中用来访问这个对象的名称，MyCommand是这个命令的别名，它可能会在用户界面中显示...</div></div></div></a><a class="pagination-related" href="/2025/11/05/%E5%87%A0%E4%B8%AA%E4%B8%8D%E5%90%8C%E7%9A%84Container/" title="几个不同的Container"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-05</div><div class="info-item-2">几个不同的Container</div></div><div class="info-2"><div class="info-item-1">Container是包含Catia不同对象的容器，可以通过Document获取，主要分为三类，不同的Container下可以通过不同的Factory创建不同的对象 BRepContainer获取方法： GetBRepContainer() 获取对象： 主要为视窗中可选取的对象  BRepAccess：视窗可选择对象  MechanicalContainer获取方法： GetSpecContainer() 获取对象： 主要是树结构中的对象  MechanicalPart：零件特征  Pad：凸台  GSMTool：几何特征（点线面）  …   CGMContainer获取方法： GetResultContainer() 获取对象： 不可以直接选取的对象  Topological object：拓扑对象  </div></div></div></a><a class="pagination-related" href="/2025/11/05/%E2%80%8BCATIA%20V5%20CAA%E5%BC%80%E5%8F%91%E4%B8%ADGetPartNumber%E7%A9%BA%E5%80%BC%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%E2%80%8B%E2%80%8B/" title="​CATIA V5 CAA开发中&#96;GetPartNumber&#96;空值问题总结"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-05</div><div class="info-item-2">​CATIA V5 CAA开发中&#96;GetPartNumber&#96;空值问题总结</div></div><div class="info-2"><div class="info-item-1">​​问题现象​​使用CATIProduct接口时，GetPartNumber返回空值，且GetReference也无效。 ​​原因​​​​高速缓存模式（CGR轻量化加载）​​：  默认启用的高速缓存系统仅加载几何外观，未加载参数和属性数据。  ​​解决方法​​ ​​关闭高速缓存​​  ​​操作​​：工具 &gt; 选项 &gt; 基础结构 &gt; 产品结构 &gt; 高速缓存管理 → ​​取消勾选​​“使用高速缓存系统” → ​​重启CATIA​​。 ​​效果​​：强制完整加载零件数据，GetPartNumber可正确读取。   ​​清理残留缓存文件​​  ​​路径​​：C:\Users\[用户]\AppData\Local\DassaultSystemes\CATCache ​​操作​​：删除缓存文件夹内所有文件。    ​​总结​​关闭高速缓存系统可解决因轻量化加载导致的数据缺失问题，确保CATIProduct接口正常获取零件属性。 </div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">镜中的幽灵</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Karze"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#SetAccessChild"><span class="toc-number">1.</span> <span class="toc-text">SetAccessChild</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SetAccessNext"><span class="toc-number">2.</span> <span class="toc-text">SetAccessNext</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB"><span class="toc-number">3.</span> <span class="toc-text">区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.</span> <span class="toc-text">示例</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/05/CATIA%20CAA%E5%BC%80%E5%8F%91%E6%95%99%E7%A8%8B%E6%96%87%E6%A1%A31/" title="CATIA CAA开发教程文档(1)">CATIA CAA开发教程文档(1)</a><time datetime="2025-11-05T01:26:10.000Z" title="发表于 2025-11-05 09:26:10">2025-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/05/CATIA%20CAA%20%E4%B8%AD%E8%BF%9B%E8%A1%8C%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" title="CATIA CAA中进行碰撞检测的两种方法总结">CATIA CAA中进行碰撞检测的两种方法总结</a><time datetime="2025-11-05T01:17:10.000Z" title="发表于 2025-11-05 09:17:10">2025-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/05/%E2%80%8BCATIA%20V5%20CAA%E5%BC%80%E5%8F%91%E4%B8%ADGetPartNumber%E7%A9%BA%E5%80%BC%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%E2%80%8B%E2%80%8B/" title="​CATIA V5 CAA开发中`GetPartNumber`空值问题总结">​CATIA V5 CAA开发中`GetPartNumber`空值问题总结</a><time datetime="2025-11-05T01:15:10.000Z" title="发表于 2025-11-05 09:15:10">2025-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/05/CATPathElementAgent/" title="CATPathElementAgent">CATPathElementAgent</a><time datetime="2025-11-05T01:11:10.000Z" title="发表于 2025-11-05 09:11:10">2025-11-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/05/CATIGSMFactory/" title="CATIGSMFactory">CATIGSMFactory</a><time datetime="2025-11-05T01:10:10.000Z" title="发表于 2025-11-05 09:10:10">2025-11-05</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 By 镜中的幽灵</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.1"></script><script src="/js/main.js?v=5.5.1"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
