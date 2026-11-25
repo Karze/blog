@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Strata 本地部署：模型 × 配置 兼容性、速度与能力评分报告 | 镜中的幽灵小站</title><meta name="author" content="镜中的幽灵"><meta name="copyright" content="镜中的幽灵"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="引擎基线 Niko1221&#x2F;Strata v0.2.21（engine 0.1.67，2026-11-25）· 覆盖 4 个模型族 &#x2F; 20 个量化包 × 13 档硬件配置 · 数据截止 2026-11-25  上一版报告只横评了「同一个模型的 5 个量化档」，回答不了「我这台机器到底该跑什么」。这一版重建为三张可筛选的表：①配置能不能跑某个模型（兼容性矩阵）②跑起来多快（速">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Strata 本地部署：模型 × 配置 兼容性、速度与能力评分报告">
+<meta property="og:url" content="https://mirror-ghost.netlify.app/2026/11/25/Strata%E6%A8%A1%E5%9E%8B%E4%B8%8E%E9%85%8D%E7%BD%AE%E8%AF%84%E5%88%86%E6%8A%A5%E5%91%8A/index.html">
+<meta property="og:site_name" content="镜中的幽灵小站">
+<meta property="og:description" content="引擎基线 Niko1221&#x2F;Strata v0.2.21（engine 0.1.67，2026-11-25）· 覆盖 4 个模型族 &#x2F; 20 个量化包 × 13 档硬件配置 · 数据截止 2026-11-25  上一版报告只横评了「同一个模型的 5 个量化档」，回答不了「我这台机器到底该跑什么」。这一版重建为三张可筛选的表：①配置能不能跑某个模型（兼容性矩阵）②跑起来多快（速">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mirror-ghost.netlify.app/images/header.jpg">
+<meta property="article:published_time" content="2026-11-25T02:45:00.000Z">
+<meta property="article:modified_time" content="2026-11-25T02:39:35.705Z">
+<meta property="article:author" content="镜中的幽灵">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Strata">
+<meta property="article:tag" content="推理引擎">
+<meta property="article:tag" content="本地部署">
+<meta property="article:tag" content="评测">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mirror-ghost.netlify.app/images/header.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Strata 本地部署：模型 × 配置 兼容性、速度与能力评分报告",
+  "url": "https://mirror-ghost.netlify.app/2026/11/25/Strata%E6%A8%A1%E5%9E%8B%E4%B8%8E%E9%85%8D%E7%BD%AE%E8%AF%84%E5%88%86%E6%8A%A5%E5%91%8A/",
+  "image": "https://mirror-ghost.netlify.app/images/header.jpg",
+  "datePublished": "2026-11-25T02:45:00.000Z",
+  "dateModified": "2026-11-25T02:39:35.705Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "镜中的幽灵",
+      "url": "https://mirror-ghost.netlify.app/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://mirror-ghost.netlify.app/2026/11/25/Strata%E6%A8%A1%E5%9E%8B%E4%B8%8E%E9%85%8D%E7%BD%AE%E8%AF%84%E5%88%86%E6%8A%A5%E5%91%8A/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Strata 本地部署：模型 × 配置 兼容性、速度与能力评分报告',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/header.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">镜中的幽灵小站</span></a><a class="nav-page-title" href="/"><span class="site-name">Strata 本地部署：模型 × 配置 兼容性、速度与能力评分报告</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Strata 本地部署：模型 × 配置 兼容性、速度与能力评分报告</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-25T02:45:00.000Z" title="发表于 2026-11-25 10:45:00">2026-11-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-25T02:39:35.705Z" title="更新于 2026-11-25 10:39:35">2026-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI/">AI</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout hide-aside" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><blockquote>
+<p>引擎基线 <strong>Niko1221&#x2F;Strata v0.2.21</strong>（engine 0.1.67，2026-11-25）· 覆盖 4 个模型族 &#x2F; 20 个量化包 × 13 档硬件配置 · 数据截止 2026-11-25</p>
+</blockquote>
+<p>上一版报告只横评了「同一个模型的 5 个量化档」，回答不了「我这台机器到底该跑什么」。这一版重建为三张可筛选的表：<strong>①配置能不能跑某个模型（兼容性矩阵）②跑起来多快（速度表）③跑出来的东西多聪明（能力分）</strong>。所有表都能按显存、内存、模型族、平台实时筛选，图表随筛选联动重算。</p>
+<p>在线报告（可交互、离线可用）：<a href="/strata-report/">&#x2F;strata-report&#x2F;</a></p>
+<h2 id="报告要点"><a href="#报告要点" class="headerlink" title="报告要点"></a>报告要点</h2><ul>
+<li><strong>支持列表已经变了</strong>：现役 4 个模型族——Qwen3.8-Flash-Next、Qwen3.6-35B-A3B、Tencent Hy4-Flash、Inkling 2 Mini；DeepSeek-V4.1-Flash 自 0.2.15 起移出。网上「Qwen3.8 &#x2F; Qwen3.6 &#x2F; DeepSeek 三大模型族」的教程和 stratallm.org 的清单都已过时。</li>
+<li><strong>最均衡的一档是 12GB 显存 + 64GB 内存</strong>：Qwen3.8 IQ2_XS 约 79 tok&#x2F;s、能力分 76.9；16GB 显存（IQ3_S，80.4 分）接近单卡体验天花板。</li>
+<li><strong>内存常常比显存更决定速度</strong>：同为 3090，192GB 内存 41 tok&#x2F;s，64GB 只有 21 tok&#x2F;s。</li>
+<li><strong>多卡不是线性加速</strong>：双 3090 跑 Coder 是 1.48×，四卡瓶颈在 PCIe 与内存带宽。</li>
+<li><strong>三盆冷水</strong>：厂商吞吐多为按带宽推算的估计值（误差约两成，实测波动 10% 起步）；9 周约 60 个版本，0.2.21 让 Inkling 提速约 3 倍，网上旧测评已失效；这是单请求引擎，不是团队服务器。</li>
+</ul>
+<h2 id="完整报告"><a href="#完整报告" class="headerlink" title="完整报告"></a>完整报告</h2><iframe id="strataReportFrame" src="/strata-report/" title="Strata 模型与配置评分报告" loading="lazy" style="width:100%;height:1600px;border:1px solid #21283b;border-radius:10px;background:#0b0f17"></iframe>
+<script>
+(function () {
+  var frame = document.getElementById('strataReportFrame');
+  if (!frame) return;
+  function fit() {
+    try {
+      var doc = frame.contentDocument;
+      if (!doc || !doc.documentElement) return;
+      var h = Math.max(1200, doc.documentElement.scrollHeight + 8);
+      frame.style.height = h + 'px';
+    } catch (e) {}
+  }
+  frame.addEventListener('load', function () {
+    fit();
+    setTimeout(fit, 400);
+    setTimeout(fit, 1200);
+  });
+  setInterval(fit, 1500);
+})();
+</script>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://mirror-ghost.netlify.app/">镜中的幽灵</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://mirror-ghost.netlify.app/2026/11/25/Strata%E6%A8%A1%E5%9E%8B%E4%B8%8E%E9%85%8D%E7%BD%AE%E8%AF%84%E5%88%86%E6%8A%A5%E5%91%8A/">https://mirror-ghost.netlify.app/2026/11/25/Strata模型与配置评分报告/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://mirror-ghost.netlify.app" target="_blank">镜中的幽灵小站</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Strata/">Strata</a><a class="post-meta__tags" href="/tags/%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2/">本地部署</a><a class="post-meta__tags" href="/tags/LLM/">LLM</a><a class="post-meta__tags" href="/tags/%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/">推理引擎</a><a class="post-meta__tags" href="/tags/%E8%AF%84%E6%B5%8B/">评测</a></div><div class="post-share"><div class="social-share" data-image="/images/header.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/01/21/CATIA_CAA_STP_Conversion_Guide/" title="CATIA CAA STP 文件转换指南"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">CATIA CAA STP 文件转换指南</div></div><div class="info-2"><div class="info-item-1">1. 概述本指南详细介绍了在 CATIA CAA (Component Application Architecture) 中如何将 CATIA 文件转换为 STP (STEP) 文件的方法。通过本指南，您将了解如何使用 CATIA CAA 提供的 API 来实现这一转换功能。 2. 必要的头文件在进行 STP 文件转换之前，需要包含以下头文件： 12345#include &lt;iostream&gt;#include &quot;CATDocumentServices.h&quot;#include &quot;CATDocument.h&quot;using namespace std;  3. 转换方法CATIA CAA 提供了两种方法来将 CATIA 文件转换为 STP 文件： 3.1 从文件路径转换以下是从文件路径转换 CATIA 文件为 STP 文件的步骤：  打开 CATIA 文档 123456CATDocument *pDoc;HRESULT hr = CATDocumentServices::Open(catiaFile, pDoc);if (FAILED(...</div></div></div></a></nav></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 镜中的幽灵</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.1"></script><script src="/js/main.js?v=5.5.1"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
