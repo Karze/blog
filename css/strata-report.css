@@ -1,0 +1,344 @@
+/* ==========================================================================
+   Strata 评分报告 —— 仅作用于文章内 容器
+   颜色全部走 Butterfly 的 CSS 变量，自动适配浅色 / 深色模式
+   ========================================================================== */
+
+:root {
+  --sr-border: rgba(0, 0, 0, .09);
+  --sr-th-bg: rgba(73, 177, 245, .07);
+  --sr-row-hover: rgba(73, 177, 245, .06);
+  --sr-muted: #858585;
+  --sr-grid: rgba(0, 0, 0, .08);
+  --sr-ok: #1a9d63;
+  --sr-warn: #b7791f;
+  --sr-no: #d94848;
+  --sr-est: #2f7fd0;
+  --sr-accent: #49b1f5;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+[data-theme='dark'] {
+  --sr-border: rgba(255, 255, 255, .14);
+  --sr-th-bg: rgba(73, 177, 245, .12);
+  --sr-row-hover: rgba(73, 177, 245, .10);
+  --sr-muted: rgba(255, 255, 255, .55);
+  --sr-grid: rgba(255, 255, 255, .12);
+  --sr-ok: #5bd693;
+  --sr-warn: #f0c14b;
+  --sr-no: #ff7b72;
+  --sr-est: #7cc4ff;
+}
+
+.sr-lead p {
+  margin: 0 0 .8em;
+}
+
+/* 副标题 / 说明文字 */
+.sr-meta {
+  font-size: 13px;
+  color: var(--sr-muted);
+  margin: 0 0 16px;
+}
+
+.sr-cap {
+  font-size: 12px;
+  color: var(--sr-muted);
+  margin-top: 8px;
+}
+
+/* KPI 数字卡 */
+.sr-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 16px 0 22px;
+}
+
+.sr-kpi {
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: var(--card-box-shadow);
+  padding: 12px 14px;
+}
+
+.sr-kpi b {
+  display: block;
+  font-size: 21px;
+  line-height: 1.3;
+  color: var(--sr-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-kpi span {
+  font-size: 12px;
+  color: var(--sr-muted);
+  line-height: 1.4;
+  display: block;
+}
+
+/* 表格：与主题表格同一套语言，但不依赖主题的表格边框变量 */
+.sr-table-wrap {
+  overflow-x: auto;
+  margin: 14px 0 8px;
+  border-radius: 6px;
+}
+
+table.sr-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+  border-top: 1px solid var(--sr-border);
+  border-left: 1px solid var(--sr-border);
+}
+
+table.sr-table th,
+table.sr-table td {
+  padding: 7px 10px;
+  border-right: 1px solid var(--sr-border);
+  border-bottom: 1px solid var(--sr-border);
+  vertical-align: middle;
+  text-align: left;
+}
+
+table.sr-table thead th {
+  background: var(--sr-th-bg);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  cursor: pointer;
+  user-select: none;
+}
+
+table.sr-table tbody td:first-child {
+  min-width: 122px;
+}
+
+.sr-table tbody td:first-child b {
+  white-space: nowrap;
+}
+
+.sr-table thead th:nth-child(8),
+.sr-table tbody td:nth-child(8) {
+  min-width: 116px;
+  white-space: nowrap;
+}
+
+.sr-table thead th:hover {
+  color: var(--sr-accent);
+}
+
+table.sr-table tbody tr:hover {
+  background: var(--sr-row-hover);
+}
+
+.sr-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-mono {
+  font-family: var(--code-font-family, consolas, Menlo, monospace);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+}
+
+.sr-sub {
+  font-size: 11.5px;
+  color: var(--sr-muted);
+  display: block;
+  line-height: 1.5;
+}
+
+/* 状态胶囊 */
+.sr-pill {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 18px;
+  white-space: nowrap;
+  border: 1px solid currentColor;
+}
+
+.sr-pill.ok { color: var(--sr-ok); background: rgba(26, 157, 99, .1); }
+.sr-pill.warn { color: var(--sr-warn); background: rgba(183, 121, 31, .1); }
+.sr-pill.no { color: var(--sr-no); background: rgba(217, 72, 72, .1); }
+.sr-pill.est { color: var(--sr-est); background: rgba(47, 127, 208, .1); }
+
+.sr-tag {
+  display: inline-block;
+  font-size: 10.5px;
+  line-height: 16px;
+  padding: 0 5px;
+  border-radius: 4px;
+  background: rgba(73, 177, 245, .12);
+  color: var(--sr-accent);
+  margin-left: 4px;
+}
+
+/* 能力分条 */
+.sr-bar {
+  display: inline-block;
+  width: 54px;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--sr-border);
+  overflow: hidden;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+.sr-bar i {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--sr-accent);
+}
+
+/* 筛选器 */
+.sr-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin: 14px 0;
+  font-size: 12px;
+  color: var(--sr-muted);
+}
+
+.sr-filters label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+}
+
+.sr-filters select,
+.sr-filters input[type='checkbox'] {
+  font-size: 13px;
+  color: var(--font-color);
+}
+
+.sr-filters select {
+  background: var(--card-bg);
+  border: 1px solid var(--sr-border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color .2s;
+}
+
+.sr-filters select:focus,
+.sr-filters select:hover {
+  border-color: var(--sr-accent);
+}
+
+.sr-filters input[type='checkbox'] {
+  accent-color: var(--sr-accent);
+  vertical-align: middle;
+}
+
+.sr-filters button {
+  font-size: 13px;
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--sr-accent);
+  background: var(--sr-accent);
+  color: #fff;
+  cursor: pointer;
+  transition: filter .2s;
+}
+
+.sr-filters button.ghost {
+  background: transparent;
+  color: var(--sr-muted);
+  border-color: var(--sr-border);
+}
+
+.sr-filters button:hover {
+  filter: brightness(1.08);
+}
+
+/* 图表容器 */
+.sr-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(430px, 1fr));
+  gap: 16px;
+  margin: 16px 0 8px;
+}
+
+.sr-chart {
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: var(--card-box-shadow);
+  padding: 14px 16px 10px;
+  min-width: 0;
+}
+
+.sr-chart h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-highlight-color);
+  margin: 0 0 2px;
+}
+
+.sr-chart p {
+  font-size: 12px;
+  color: var(--sr-muted);
+  margin: 0 0 10px;
+}
+
+.sr-cw {
+  position: relative;
+  height: 300px;
+  min-height: 240px;
+}
+
+/* 结论表里的说明 */
+.sr-note-list {
+  margin: 0;
+}
+
+.sr-src {
+  font-size: 13px;
+  color: var(--font-color);
+}
+
+.sr-src li {
+  margin-left: 18px;
+  margin-bottom: 4px;
+}
+
+.sr-src h4 {
+  font-size: 13.5px;
+  margin: 14px 0 6px;
+}
+
+@media (max-width: 900px) {
+  .sr-charts {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 正文是两端对齐，中文表格里会被拉开字距；表格内改为左对齐（数字列仍右对齐） */
+.post-content:has(#srMatrix) table th,
+.post-content:has(#srMatrix) table td:not(.sr-num) {
+  text-align: left;
+}
+
+table.sr-table .sr-num {
+  text-align: right;
+}
+
+.post-content:has(#srMatrix) table th:first-child,
+.post-content:has(#srMatrix) table td:first-child {
+  min-width: 168px;
+}

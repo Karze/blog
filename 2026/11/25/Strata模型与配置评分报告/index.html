@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Strata 本地部署：模型 × 配置 兼容性、速度与能力评分报告 | 镜中的幽灵小站</title><meta name="author" content="镜中的幽灵"><meta name="copyright" content="镜中的幽灵"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="引擎基线 Niko1221&#x2F;Strata v0.2.21（engine 0.1.67，2026-11-25）· 覆盖 4 个模型族 &#x2F; 20 个量化包 × 13 档硬件配置 · 数据截止 2026-11-25  上一版报告只横评了「同一个模型的 5 个量化档」，回答不了「我这台机器到底该跑什么」。这一版重建为三张可筛选的表：①配置能不能跑某个模型（兼容性矩阵）②跑起来多快（速">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Strata 本地部署：模型 × 配置 兼容性、速度与能力评分报告 | 镜中的幽灵小站</title><meta name="author" content="镜中的幽灵"><meta name="copyright" content="镜中的幽灵"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="引擎基线 Niko1221&#x2F;Strata v0.2.21（engine 0.1.67，2026-11-25） · 覆盖 4 个模型族 &#x2F; 20 个量化包 × 13 档硬件配置 · 数据截止 2026-11-25  这份报告解决什么问题 上一版报告只横评了「同一个模型的 5 个量化档」，回答不了「我这台机器到底该跑什么」。这一版重建为三张可筛选的表：①配置能不能跑某个模型（兼容性矩阵）②跑起来多快（">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Strata 本地部署：模型 × 配置 兼容性、速度与能力评分报告">
 <meta property="og:url" content="https://mirror-ghost.netlify.app/2026/11/25/Strata%E6%A8%A1%E5%9E%8B%E4%B8%8E%E9%85%8D%E7%BD%AE%E8%AF%84%E5%88%86%E6%8A%A5%E5%91%8A/index.html">
 <meta property="og:site_name" content="镜中的幽灵小站">
-<meta property="og:description" content="引擎基线 Niko1221&#x2F;Strata v0.2.21（engine 0.1.67，2026-11-25）· 覆盖 4 个模型族 &#x2F; 20 个量化包 × 13 档硬件配置 · 数据截止 2026-11-25  上一版报告只横评了「同一个模型的 5 个量化档」，回答不了「我这台机器到底该跑什么」。这一版重建为三张可筛选的表：①配置能不能跑某个模型（兼容性矩阵）②跑起来多快（速">
+<meta property="og:description" content="引擎基线 Niko1221&#x2F;Strata v0.2.21（engine 0.1.67，2026-11-25） · 覆盖 4 个模型族 &#x2F; 20 个量化包 × 13 档硬件配置 · 数据截止 2026-11-25  这份报告解决什么问题 上一版报告只横评了「同一个模型的 5 个量化档」，回答不了「我这台机器到底该跑什么」。这一版重建为三张可筛选的表：①配置能不能跑某个模型（兼容性矩阵）②跑起来多快（">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://mirror-ghost.netlify.app/images/header.jpg">
 <meta property="article:published_time" content="2026-11-25T02:45:00.000Z">
-<meta property="article:modified_time" content="2026-11-25T02:39:35.705Z">
+<meta property="article:modified_time" content="2026-11-25T02:54:50.397Z">
 <meta property="article:author" content="镜中的幽灵">
 <meta property="article:tag" content="LLM">
 <meta property="article:tag" content="Strata">
@@ -22,7 +22,7 @@
   "url": "https://mirror-ghost.netlify.app/2026/11/25/Strata%E6%A8%A1%E5%9E%8B%E4%B8%8E%E9%85%8D%E7%BD%AE%E8%AF%84%E5%88%86%E6%8A%A5%E5%91%8A/",
   "image": "https://mirror-ghost.netlify.app/images/header.jpg",
   "datePublished": "2026-11-25T02:45:00.000Z",
-  "dateModified": "2026-11-25T02:39:35.705Z",
+  "dateModified": "2026-11-25T02:54:50.397Z",
   "author": [
     {
       "@type": "Person",
@@ -163,37 +163,325 @@
   isHighlightShrink: false,
   isToc: false,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 8.1.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/header.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">镜中的幽灵小站</span></a><a class="nav-page-title" href="/"><span class="site-name">Strata 本地部署：模型 × 配置 兼容性、速度与能力评分报告</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Strata 本地部署：模型 × 配置 兼容性、速度与能力评分报告</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-25T02:45:00.000Z" title="发表于 2026-11-25 10:45:00">2026-11-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-25T02:39:35.705Z" title="更新于 2026-11-25 10:39:35">2026-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI/">AI</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout hide-aside" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><blockquote>
-<p>引擎基线 <strong>Niko1221&#x2F;Strata v0.2.21</strong>（engine 0.1.67，2026-11-25）· 覆盖 4 个模型族 &#x2F; 20 个量化包 × 13 档硬件配置 · 数据截止 2026-11-25</p>
-</blockquote>
+}</script><link rel="stylesheet" href="/css/strata-report.css"><meta name="generator" content="Hexo 8.1.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/header.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">镜中的幽灵小站</span></a><a class="nav-page-title" href="/"><span class="site-name">Strata 本地部署：模型 × 配置 兼容性、速度与能力评分报告</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Strata 本地部署：模型 × 配置 兼容性、速度与能力评分报告</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-25T02:45:00.000Z" title="发表于 2026-11-25 10:45:00">2026-11-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-25T02:54:50.397Z" title="更新于 2026-11-25 10:54:50">2026-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI/">AI</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout hide-aside" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div class="sr-meta">引擎基线 <strong>Niko1221/Strata v0.2.21（engine 0.1.67，2026-11-25）</strong> · 覆盖 4 个模型族 / 20 个量化包 × 13 档硬件配置 · 数据截止 2026-11-25</div>
+
+<div class="note primary flat"><p><strong>这份报告解决什么问题</strong></p>
 <p>上一版报告只横评了「同一个模型的 5 个量化档」，回答不了「我这台机器到底该跑什么」。这一版重建为三张可筛选的表：<strong>①配置能不能跑某个模型（兼容性矩阵）②跑起来多快（速度表）③跑出来的东西多聪明（能力分）</strong>。所有表都能按显存、内存、模型族、平台实时筛选，图表随筛选联动重算。</p>
-<p>在线报告（可交互、离线可用）：<a href="/strata-report/">&#x2F;strata-report&#x2F;</a></p>
-<h2 id="报告要点"><a href="#报告要点" class="headerlink" title="报告要点"></a>报告要点</h2><ul>
-<li><strong>支持列表已经变了</strong>：现役 4 个模型族——Qwen3.8-Flash-Next、Qwen3.6-35B-A3B、Tencent Hy4-Flash、Inkling 2 Mini；DeepSeek-V4.1-Flash 自 0.2.15 起移出。网上「Qwen3.8 &#x2F; Qwen3.6 &#x2F; DeepSeek 三大模型族」的教程和 stratallm.org 的清单都已过时。</li>
-<li><strong>最均衡的一档是 12GB 显存 + 64GB 内存</strong>：Qwen3.8 IQ2_XS 约 79 tok&#x2F;s、能力分 76.9；16GB 显存（IQ3_S，80.4 分）接近单卡体验天花板。</li>
-<li><strong>内存常常比显存更决定速度</strong>：同为 3090，192GB 内存 41 tok&#x2F;s，64GB 只有 21 tok&#x2F;s。</li>
-<li><strong>多卡不是线性加速</strong>：双 3090 跑 Coder 是 1.48×，四卡瓶颈在 PCIe 与内存带宽。</li>
-<li><strong>三盆冷水</strong>：厂商吞吐多为按带宽推算的估计值（误差约两成，实测波动 10% 起步）；9 周约 60 个版本，0.2.21 让 Inkling 提速约 3 倍，网上旧测评已失效；这是单请求引擎，不是团队服务器。</li>
+</div>
+
+<span id="more"></span>
+
+<div class="sr-kpis">
+  <div class="sr-kpi"><b>4</b><span>当前在支持列表内的模型族</span></div>
+  <div class="sr-kpi"><b>1</b><span>已被移出支持列表（DeepSeek V4.1-Flash）</span></div>
+  <div class="sr-kpi"><b>4 GB</b><span>0.2.20 起的理论显存下限</span></div>
+  <div class="sr-kpi"><b>83.1</b><span>全场最高能力分（Qwen3.8-Flash-Next）</span></div>
+  <div class="sr-kpi"><b>3×</b><span>0.2.21 对 Inkling 长对话的提速幅度</span></div>
+</div>
+
+<h2 id="一、先明确：Strata-现在到底支持哪些模型"><a href="#一、先明确：Strata-现在到底支持哪些模型" class="headerlink" title="一、先明确：Strata 现在到底支持哪些模型"></a>一、先明确：Strata 现在到底支持哪些模型</h2><p>这是最容易踩坑的一步。<strong>网上大量中文教程还在写「Strata 支持 Qwen3.8 &#x2F; Qwen3.6 &#x2F; DeepSeek-V4.1-Flash 三大模型族」，这已经过时了。</strong></p>
+<table>
+<thead>
+<tr>
+<th>模型族</th>
+<th>总参 &#x2F; 激活</th>
+<th>加入版本</th>
+<th>当前状态</th>
+<th>可用量化包</th>
+<th>平台限制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Qwen3.8-Flash-Next</strong></td>
+<td><span class="sr-mono">125B &#x2F; 6B</span></td>
+<td><span class="sr-mono">0.1.x（首发）</span></td>
+<td><span class="sr-pill ok">主力</span></td>
+<td><span class="sr-mono">ISTA Q2_0 &#x2F; IQ2_XS &#x2F; IQ3_XXS &#x2F; IQ3_S &#x2F; Coder IQ1_M</span>；Unsloth UD-IQ4_XS～Q8_0；Gyro-S &#x2F; Gyro-M；Swift 1.5；NVFP4</td>
+<td>全平台</td>
+</tr>
+<tr>
+<td><strong>Qwen3.6-35B-A3B</strong></td>
+<td><span class="sr-mono">35B &#x2F; 3B</span></td>
+<td><span class="sr-mono">0.1.44</span></td>
+<td><span class="sr-pill ok">在列</span></td>
+<td><span class="sr-mono">UD-Q4_K_XL &#x2F; UD-Q6_K_XL &#x2F; Q8_0</span></td>
+<td><span class="sr-pill warn">无 Mac &#x2F; 无 Intel Arc</span></td>
+</tr>
+<tr>
+<td><strong>Tencent Hy4-Flash</strong></td>
+<td><span class="sr-mono">220B &#x2F; 12B</span></td>
+<td><span class="sr-mono">0.2.18</span></td>
+<td><span class="sr-pill ok">在列</span></td>
+<td><span class="sr-mono">Strata SQ-64 &#x2F; SQ-96 &#x2F; SQ-128</span></td>
+<td>Win &#x2F; Linux &#x2F; Mac &#x2F; Arc &#x2F; Spark</td>
+</tr>
+<tr>
+<td><strong>Inkling 2 Mini</strong></td>
+<td><span class="sr-mono">26.4B &#x2F; 3.4B</span></td>
+<td><span class="sr-mono">0.2.19</span></td>
+<td><span class="sr-pill ok">在列</span></td>
+<td><span class="sr-mono">Strata SQ-10 &#x2F; SQ-15 &#x2F; SQ-20</span>；Unsloth UD-Q2_K_XL～Q8_0</td>
+<td>全平台（4GB 卡可跑）</td>
+</tr>
+<tr>
+<td>DeepSeek-V4.1-Flash-1017</td>
+<td>—</td>
+<td><span class="sr-mono">0.2.4</span></td>
+<td><span class="sr-pill no">已移出</span></td>
+<td><span class="sr-mono">ISTA 2.00&#x2F;2.25bpw</span>、<span class="sr-mono">UD-IQ1_S&#x2F;M</span></td>
+<td>0.2.15 起不再运行</td>
+</tr>
+</tbody></table>
+<div class="note warning flat"><p><strong>三个必须澄清的坑</strong></p>
+<p>① <strong>同名项目污染</strong>：stratallm.org 那类站点把 DeepSeek-V2-Lite、Mixtral 也列进「Supported Models」，并给出 <code>strata-cli run --model …</code> 命令——<strong>这不是 Niko1221&#x2F;Strata 的 CLI</strong>（真命令是 <code>strata launch --family …</code>）。那份清单不可信。</p>
+<p>② <strong>DeepSeek 已死</strong>：它跑在 0.2.4～0.2.13，0.2.15 起移除。网上「RTX 3060 跑 DeepSeek 9-11 tok&#x2F;s」「四卡 R9700 跑 74-77 tok&#x2F;s」都是绝版数据，别照着买硬盘（它要 245-280GB）。</p>
+<p>③ <strong>Hy4-Flash 是腾讯自家许可</strong>：Tencent Hy License，内部与一般商用 OK；以 MaaS 形式对外提供且年营收 &gt;5000 万美元或月活 &gt;1 亿，需单独书面授权。</p>
+</div>
+
+<h2 id="二、能力分：不比跑分比什么"><a href="#二、能力分：不比跑分比什么" class="headerlink" title="二、能力分：不比跑分比什么"></a>二、能力分：不比跑分比什么</h2><p>Strata 官方从不给模型打分。我从三个可核查来源合成了一把 <strong>0-100 的能力尺</strong>，避免拿不同 harness 的绝对分硬排：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>权重</th>
+<th>数据来源与口径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>通用与知识</td>
+<td><span class="sr-mono">25%</span></td>
+<td>MMLU-Pro &#x2F; MMLU-Redux &#x2F; SuperGPQA &#x2F; C-Eval 归一</td>
+</tr>
+<tr>
+<td>科学与数学</td>
+<td><span class="sr-mono">20%</span></td>
+<td>GPQA Diamond &#x2F; AIME &#x2F; HLE 归一</td>
+</tr>
+<tr>
+<td>代码与智能体</td>
+<td><span class="sr-mono">30%</span></td>
+<td>SWE-bench Verified&#x2F;Pro、Terminal-Bench 2.0、LiveCodeBench v6、DeepSWE</td>
+</tr>
+<tr>
+<td>工具与长上下文</td>
+<td><span class="sr-mono">15%</span></td>
+<td>MCP-Atlas、BrowseComp、MRCR &#x2F; 长文检索实测</td>
+</tr>
+<tr>
+<td>中文与指令跟随</td>
+<td><span class="sr-mono">10%</span></td>
+<td>多轮约束、CJK 质量；<strong>负分项</strong>：Coder 版砍半专家致中文劣化、Inkling 官方承认中文可能截断或中英混杂</td>
+</tr>
+</tbody></table>
+<div class="note success flat"><p><strong>分数怎么读</strong></p>
+<p><span class="sr-pill ok">≥85 旗舰级</span> 全场顶配量化，能力接近原版权重；<br><span class="sr-pill est">75-85 主力级</span> 日常主力可用，损失可控；<br><span class="sr-pill warn">60-75 妥协级</span> 为塞进小显存付出的代价（Coder 砍半专家、Gyro &#x2F; Gyro-S 极小档、低比特 Inkling）；<br>低于 60 基本只在「没别的能跑」时才选。</p>
+</div>
+
+<div class="note info flat"><p><strong>为什么不能直接抄榜</strong></p>
+<p>这五个模型族的分数来自各自官方 model card + 少量第三方复测，<strong>harness、采样、提示词都不同源</strong>。所以本报告的分数只用于<strong>同档位内的相对排序</strong>，跨模型族的绝对差值请当作 ±3 分的模糊区间看，不要当成 1.5 倍性能差距。</p>
+</div>
+
+<h2 id="三、能力排行榜（权重可调）"><a href="#三、能力排行榜（权重可调）" class="headerlink" title="三、能力排行榜（权重可调）"></a>三、能力排行榜（权重可调）</h2><div class="sr-filters">
+  <label>侧重场景
+    <select id="srWsel">
+      <option value="bal" selected>均衡（默认）</option>
+      <option value="code">写代码 / Agent</option>
+      <option value="cn">中文办公写作</option>
+      <option value="reason">推理与数学</option>
+      <option value="speed">重吞吐（能力只占 30%）</option>
+    </select>
+  </label>
+  <span id="srWdesc"></span>
+</div>
+
+<div class="sr-charts">
+  <div class="sr-chart">
+    <h4>综合能力分排行</h4>
+    <p>实心色块 = 已锁定对比。点击柱子可锁定 / 取消（最多 4 条进入雷达图）</p>
+    <div class="sr-cw"><canvas id="srRank" role="img" aria-label="综合能力分排行"></canvas></div>
+  </div>
+  <div class="sr-chart">
+    <h4>五维能力雷达</h4>
+    <p>选中配置的维度剖面</p>
+    <div class="sr-cw"><canvas id="srRadar" role="img" aria-label="五维能力雷达"></canvas></div>
+  </div>
+</div>
+
+<h2 id="四、兼容性-×-速度矩阵（核心表）"><a href="#四、兼容性-×-速度矩阵（核心表）" class="headerlink" title="四、兼容性 × 速度矩阵（核心表）"></a>四、兼容性 × 速度矩阵（核心表）</h2><div class="sr-filters">
+  <label>显存
+    <select id="srVram">
+      <option value="0">不限</option><option value="4">≥4 GB</option><option value="8">≥8 GB</option><option value="12" selected>≥12 GB</option><option value="16">≥16 GB</option><option value="24">≥24 GB</option><option value="32">≥32 GB</option>
+    </select>
+  </label>
+  <label>内存
+    <select id="srRam">
+      <option value="0">不限</option><option value="16">≥16 GB</option><option value="24">≥24 GB</option><option value="32" selected>≥32 GB</option><option value="48">≥48 GB</option><option value="64">≥64 GB</option><option value="96">≥96 GB</option><option value="128">≥128 GB</option>
+    </select>
+  </label>
+  <label>模型族 <select id="srFam"><option value="">全部</option></select></label>
+  <label>平台
+    <select id="srPlat">
+      <option value="">全部</option><option value="NVIDIA">NVIDIA</option><option value="AMD">AMD</option><option value="Apple">Apple</option><option value="Intel">Intel Arc</option><option value="Strix Halo">Strix Halo</option><option value="Spark">DGX Spark</option>
+    </select>
+  </label>
+  <label>卡数
+    <select id="srGpu"><option value="0">不限</option><option value="1">单卡</option><option value="2">双卡</option><option value="4">四卡</option></select>
+  </label>
+  <label><input type="checkbox" id="srEst" checked> 含估算值</label>
+  <button class="ghost" id="srReset">重置</button>
+  <span id="srCnt"></span>
+</div>
+
+<table id="srMatrix" class="sr-table">
+<thead>
+<tr>
+<th data-k="fam">模型 / 包</th>
+<th data-k="gpu">配置</th>
+<th data-k="plat">平台</th>
+<th class="sr-num" data-k="vram">显存 GB</th>
+<th class="sr-num" data-k="ram">内存 GB</th>
+<th class="sr-num" data-k="spd">解码 tok/s</th>
+<th class="sr-num" data-k="pre">预填 tok/s</th>
+<th class="sr-num" data-k="score">能力分</th>
+<th class="sr-num" data-k="ts">综合分</th>
+<th data-k="fit">可部署性</th>
+<th data-k="src">数据性质</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+<div class="sr-cap">「综合分」= 能力分 45% + 速度分 35% + 可部署性 20%（速度分按该行速度 / 全场最高速度归一；可部署性：原生适配可跑 = 100、需手动参数 = 70、社区编译 = 45）。点表头可排序。</div>
+
+<h2 id="五、图表（随筛选联动）"><a href="#五、图表（随筛选联动）" class="headerlink" title="五、图表（随筛选联动）"></a>五、图表（随筛选联动）</h2><div class="sr-charts">
+  <div class="sr-chart">
+    <h4>速度 vs 能力：性价比象限</h4>
+    <p>右上角 = 又快又聪明。气泡大小 = 显存占用</p>
+    <div class="sr-cw"><canvas id="srScatter" role="img" aria-label="速度对能力象限"></canvas></div>
+  </div>
+  <div class="sr-chart">
+    <h4>同硬件下各量化档的速度衰减</h4>
+    <p>同一量化族内，档位升高的速度代价</p>
+    <div class="sr-cw"><canvas id="srQuant" role="img" aria-label="同硬件量化档速度衰减"></canvas></div>
+  </div>
+  <div class="sr-chart">
+    <h4>内存容量对单卡 24G 的约束（125B）</h4>
+    <p>显存相同时，系统内存仍是硬瓶颈</p>
+    <div class="sr-cw"><canvas id="srRamLine" role="img" aria-label="系统内存约束"></canvas></div>
+  </div>
+  <div class="sr-chart">
+    <h4>多卡扩展：单流 vs 并发聚合</h4>
+    <p>Strata 多卡是层切分流水线，不是张量并行</p>
+    <div class="sr-cw"><canvas id="srMulti" role="img" aria-label="多卡扩展"></canvas></div>
+  </div>
+</div>
+
+<h2 id="六、按配置给出结论：你这台机器该跑什么"><a href="#六、按配置给出结论：你这台机器该跑什么" class="headerlink" title="六、按配置给出结论：你这台机器该跑什么"></a>六、按配置给出结论：你这台机器该跑什么</h2><table>
+<thead>
+<tr>
+<th>你的配置</th>
+<th>首选</th>
+<th>次选</th>
+<th>别碰</th>
+<th>预期体验</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4-8GB 显存 + 16-32GB 内存<br><span class="sr-sub">轻薄本 &#x2F; 老卡</span></td>
+<td><strong>Inkling 2 Mini SQ-10</strong><br><span class="sr-sub">3060Ti 8G：43 tok&#x2F;s</span></td>
+<td>Qwen3.6 UD-Q4_K_XL<br><span class="sr-sub">50-80 tok&#x2F;s，但需 ≥32GB 内存</span></td>
+<td><span class="sr-pill no">Qwen3.8 &#x2F; Hy4-Flash</span><br><span class="sr-sub">内存 &lt;64GB 会换页到 &lt;5 tok&#x2F;s</span></td>
+<td>能干活，Agent + 工具调用可用；中文写作别指望</td>
+</tr>
+<tr>
+<td>12GB 显存 + 32-48GB 内存<br><span class="sr-sub">RTX 3060 &#x2F; 5070 主流档</span></td>
+<td><strong>Qwen3.6 UD-Q4_K_XL</strong><br><span class="sr-sub">50-80 tok&#x2F;s，能力分 71.7</span></td>
+<td>Inkling SQ-10（5070：68 tok&#x2F;s）<br>Qwen3.8 Coder IQ1_M</td>
+<td><span class="sr-pill no">Qwen3.8 IQ3_S</span><br><span class="sr-sub">54.8GB 内存占用，48GB 装不下</span></td>
+<td>甜点区。想跑 125B 只能上 Coder &#x2F; Gyro，中文与通用能力明显缩水</td>
+</tr>
+<tr>
+<td>12GB + 64GB 内存<br><span class="sr-sub">官方基准机</span></td>
+<td><strong>Qwen3.8 IQ2_XS</strong><br><span class="sr-sub">79 tok&#x2F;s，能力 76.9</span></td>
+<td>IQ3_S（53 tok&#x2F;s，能力 80.4）<br>Swift 1.5</td>
+<td>UD-Q4_K_XL<br><span class="sr-sub">64GB 上仅 7-8.5 tok&#x2F;s（走 SSD）</span></td>
+<td>最均衡的一档。<strong>IQ2_XS 与 Q2_0 的 1.2 分能力差，换 25 tok&#x2F;s，值得</strong></td>
+</tr>
+<tr>
+<td>16GB 显存 + 64GB 内存<br><span class="sr-sub">5070Ti &#x2F; 9070XT &#x2F; 笔记本 4090</span></td>
+<td><strong>Qwen3.8 IQ3_S</strong><br><span class="sr-sub">43-57 tok&#x2F;s，能力 80.4</span></td>
+<td>Gyro-M（48-58 tok&#x2F;s）<br>Inkling SQ-15</td>
+<td>Hy4-Flash SQ-96&#x2F;128</td>
+<td>单卡体验天花板附近。Gyro-M 在 16GB 上过 6 项代码实测，工具调用比 Gyro-S 稳</td>
+</tr>
+<tr>
+<td>24GB 显存 + 64-128GB 内存<br><span class="sr-sub">3090 &#x2F; 4090</span></td>
+<td><strong>Qwen3.8 IQ3_S</strong><br><span class="sr-sub">100-140 tok&#x2F;s（官方预估）</span></td>
+<td>Inkling UD-Q4_K_XL<br><span class="sr-sub">4090 32K 后长对话 92 tok&#x2F;s</span></td>
+<td>—</td>
+<td><strong>内存比显存更决定速度</strong>：同为 3090，192GB→41 tok&#x2F;s，64GB→21 tok&#x2F;s</td>
+</tr>
+<tr>
+<td>32GB 显存 + 128GB 内存<br><span class="sr-sub">RTX 5090 &#x2F; PRO 5000</span></td>
+<td><strong>Qwen3.8 IQ2_XS &#x2F; IQ3_S</strong><br><span class="sr-sub">179 tok&#x2F;s（4K）→165（128K）</span></td>
+<td>Hy4-Flash SQ-64（90-111）<br>Qwen3.6（215）</td>
+<td>—</td>
+<td>单卡封顶。32G 显存的真正价值是余裕（7-10GB 净空），不是速度本身</td>
+</tr>
+<tr>
+<td>2-4 卡 + 128GB+ 内存</td>
+<td><strong>4×5090 IQ3_S</strong><br><span class="sr-sub">单流 253-294，16 并发 1132 tok&#x2F;s</span></td>
+<td>3×V100 32G（366-381 代码）<br>4×R9700 Hy4（57-103）</td>
+<td><span class="sr-pill warn">指望 4 倍线性加速</span></td>
+<td>双卡 3090：Coder 66.8→98.6（1.48×）；<strong>四卡不是 4 倍</strong>，瓶颈在 PCIe + 内存带宽</td>
+</tr>
+<tr>
+<td>Apple Silicon<br><span class="sr-sub">M5 Max &#x2F; M6 Mac mini 24-128GB</span></td>
+<td><strong>Inkling 2 Mini SQ-10</strong><br><span class="sr-sub">M6 24GB：33.6 单路 &#x2F; 60.6 四并发</span></td>
+<td>Qwen3.8 UD-Q4_K_XL<br><span class="sr-sub">M5 Max 94.7 tok&#x2F;s，预填 6769</span></td>
+<td><span class="sr-pill no">Qwen3.6-35B-A3B</span><br><span class="sr-sub">该模型明确不支持 Mac</span></td>
+<td>24GB 统一内存是分水岭：Strata 比同机 Unsloth 快 54%，预填 2.17 倍</td>
+</tr>
+</tbody></table>
+<h2 id="七、必须泼的三盆冷水"><a href="#七、必须泼的三盆冷水" class="headerlink" title="七、必须泼的三盆冷水"></a>七、必须泼的三盆冷水</h2><div class="note danger flat"><p><strong>① 「厂商跑分 ≠ 你的机器」不是套话，是数量级问题。</strong> 上表速度里，官方自测占多数，且官方自己注明「其他显卡的吞吐是按带宽推算的估计值，误差可能有两成」。而同一套配置跑两次 512 token，5090 出过 294 和 253 两个结果——<strong>波动 10% 起步</strong>。任何一个单次数字拿出来当定理都别信。</p>
+</div>
+
+<div class="note warning flat"><p><strong>② 版本迭代速度已经让历史 benchmark 失效。</strong> 9 月 24 日建仓到 11 月 25 日，已到 0.2.21（9 周约 60 个版本）。0.2.21 对 Inkling 的改动是：4090 32K 长对话 29→92 tok&#x2F;s、3060Ti 8G SQ-10 11→43、5070 12G 12.5→68、RX 7900 XT 4.9→66。<strong>你网上搜到的 Inkling 测评，绝大多数是 0.2.19 &#x2F; 0.2.20 的，已经低了 3 倍。</strong> 代价也写了：24G 的 40&#x2F;50 系默认改成 1 个 slot，RX 7900 XT 配 SQ-20 解码低约 7%，AMD 12G 卡跑 Inkling 低约 13%。</p>
+</div>
+
+<div class="note danger flat"><p><strong>③ 这是单请求引擎，不是团队服务器。</strong> Strata 默认一次只答一个问题，其余排队。8GB 卡上第二条请求进来 TTFT 直接排队 &gt;3.1 秒。它的定位是「个人电脑上的我的模型」——如果你想给十个人同时用，或想用多台笔记本组集群，Strata 本身不解决多机问题，它只解决单机内的显存 &#x2F; 内存 &#x2F; SSD 三级调度。</p>
+</div>
+
+<h2 id="八、数据来源"><a href="#八、数据来源" class="headerlink" title="八、数据来源"></a>八、数据来源</h2><h4 id="引擎与兼容性（权威）"><a href="#引擎与兼容性（权威）" class="headerlink" title="引擎与兼容性（权威）"></a>引擎与兼容性（权威）</h4><ul>
+<li>Strata 官方仓库 README &#x2F; docs&#x2F;MODELS.md &#x2F; docs&#x2F;MULTI_GPU.md &#x2F; docs&#x2F;OLDER_GPUS.md — github.com&#x2F;Niko1221&#x2F;Strata</li>
+<li>Strata v0.2.21 &#x2F; v0.2.20 &#x2F; v0.2.19 &#x2F; v0.2.18 &#x2F; v0.2.14 &#x2F; v0.2.12 &#x2F; v0.2.9 Release Notes — 速度、提速倍数、已知问题、模型加入与移除版本</li>
+<li>VRAMCalculator《Strata engine Dropped DeepSeek》（2026-11-22）— 0.2.19 四模型族清单与各包体积</li>
+<li>SSD Nodes《Self-host Qwen3.8-Flash-Next》（2026-11-19）— DeepSeek 于 0.2.15 移出、Qwen3.6 于 0.1.44 加入的版本线</li>
 </ul>
-<h2 id="完整报告"><a href="#完整报告" class="headerlink" title="完整报告"></a>完整报告</h2><iframe id="strataReportFrame" src="/strata-report/" title="Strata 模型与配置评分报告" loading="lazy" style="width:100%;height:1600px;border:1px solid #21283b;border-radius:10px;background:#0b0f17"></iframe>
-<script>
-(function () {
-  var frame = document.getElementById('strataReportFrame');
-  if (!frame) return;
-  function fit() {
-    try {
-      var doc = frame.contentDocument;
-      if (!doc || !doc.documentElement) return;
-      var h = Math.max(1200, doc.documentElement.scrollHeight + 8);
-      frame.style.height = h + 'px';
-    } catch (e) {}
-  }
-  frame.addEventListener('load', function () {
-    fit();
-    setTimeout(fit, 400);
-    setTimeout(fit, 1200);
-  });
-  setInterval(fit, 1500);
-})();
-</script>
+<h4 id="模型能力（官方-model-card-优先）"><a href="#模型能力（官方-model-card-优先）" class="headerlink" title="模型能力（官方 model card 优先）"></a>模型能力（官方 model card 优先）</h4><ul>
+<li>Qwen3.8-Flash-Next 官方博客与 model card — GPQA 91.7 &#x2F; LiveCodeBench v6 91.9 &#x2F; SWE-bench Pro 62.5 &#x2F; Toolathlon 73.5 &#x2F; CoWorkBench 73.9 &#x2F; HLE 35.9 &#x2F; NL2Repo 48.1</li>
+<li>Qwen3.6-35B-A3B 官方发布页 — SWE-bench Verified 73.4 &#x2F; Terminal-Bench 2.0 51.5 &#x2F; MCPMark 37.0 &#x2F; GPQA 86.0 &#x2F; AIME26 92.7 &#x2F; LiveCodeBench v6 80.4 &#x2F; MMLU-Pro 85.2 &#x2F; C-Eval 90.0</li>
+<li>Thinking Machines Lab《Introducing Inkling 2 Mini》（2026-11-20）— DeepSWE v1.1 48.2%、SWE-bench Pro v2 Hard 77.9%、Vals Index v2.2 46.5%、AA 智能指数 20.1、BrowseComp 79.0、MultiChallenge 50.0、ComplexConstraints 33.4，及中文截断 &#x2F; 中英混杂的官方局限说明</li>
+<li>腾讯混元 Hy4-Flash 官方 GitHub 与 WorkIndex 内部评测 — 综合 42.1（Hy4 51.4 &#x2F; Hy4 Preview 39.7）、MMLU 88.7、MMLU-Pro 71.1、C-Eval 92.0；85 人盲测满意度 2.79&#x2F;4</li>
+</ul>
+<h4 id="速度与兼容性实测（社区，已在表中标注数据性质）"><a href="#速度与兼容性实测（社区，已在表中标注数据性质）" class="headerlink" title="速度与兼容性实测（社区，已在表中标注数据性质）"></a>速度与兼容性实测（社区，已在表中标注数据性质）</h4><ul>
+<li>官方基准：RTX 5070 12G&#x2F;64G 五档量化、RX 9070 XT 16G&#x2F;47G、RTX 5090 32G 社区提交（179.4 tok&#x2F;s）、双 RTX 3090 + EPYC（Coder 单卡 66.8 → 双卡 98.6&#x2F;103.3）</li>
+<li>四卡实测：4×RTX 4090 IQ3_S 单流 152.1、8 并发 507.8；4×RTX 5090 同参数 253-294、16 并发 1132</li>
+<li>低显存边界：8GB 五级降级机制实测 12.7-35 tok&#x2F;s；单 3090 内存分级 192&#x2F;128&#x2F;96&#x2F;64GB → 41.0&#x2F;34.0&#x2F;29.3&#x2F;21.0 tok&#x2F;s；3×V100 32G Q4 代码 366.9-381.6</li>
+<li>Gyro-M 16GB 实测（RTX 2000 Ada 16G + 64G DDR4）：decode 48-58 tok&#x2F;s、长文检索 15&#x2F;15、推理 85.4%、HumanEval Remix 99%</li>
+<li>Apple：M6 Mac mini 24GB SQ-10 单路 33.6 &#x2F; 四并发 60.6（Strata）vs Unsloth 21.77；M5 Max IQ3_S 94.7 tok&#x2F;s</li>
+<li>Qwen3.6 跨平台：RTX 5090 215.1 &#x2F; M5 Max 36GB 178.0 &#x2F; RX 7900 XTX 125.5 &#x2F; RTX 3090 101.7 &#x2F; M4 Max 128GB 81.1（llamaperf 汇总）</li>
+</ul>
+<h4 id="已剔除的不可信来源"><a href="#已剔除的不可信来源" class="headerlink" title="已剔除的不可信来源"></a>已剔除的不可信来源</h4><ul>
+<li>stratallm.org 的「Supported Models」清单（含 DeepSeek-V2-Lite &#x2F; Mixtral，CLI 命令与真实项目不符）</li>
+<li>stratat.com 的 DeepSeek-V4.1-Flash-1017 指南（约 4GB &#x2F; 16GB RAM &#x2F; CPU 推理，与该模型实际 245-280GB 包体完全矛盾）</li>
+<li>各类「Strata 评分 88&#x2F;100」类站点：那是给引擎的采用度 &#x2F; 新鲜度分，不是模型能力分</li>
+</ul>
+<div class="note default flat"><p><strong>使用建议</strong>：把这张表当「选型地图」而不是「采购依据」。真正下单前，用 <code>strata launch --family … --plan</code> 先看运行计划（不下载不启动），确认显存 &#x2F; 内存账本对得上，再拿你自己最常用的 5-10 条真实提示词跑一轮。官方也明确说了：数字不是承诺值。</p>
+</div>
+
+<div class="sr-cap" style="text-align:center;margin-top:26px">报告生成于 2026-11-25 · 引擎基线 v0.2.21 · 共 56 条「模型包 × 硬件配置」记录，覆盖 20 个量化包 · 能力分为多源合成的相对排序，非官方口径</div>
+
+<script src="/js/chart.umd.min.js"></script>
+<script src="/js/strata-report.js"></script>
 </article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://mirror-ghost.netlify.app/">镜中的幽灵</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://mirror-ghost.netlify.app/2026/11/25/Strata%E6%A8%A1%E5%9E%8B%E4%B8%8E%E9%85%8D%E7%BD%AE%E8%AF%84%E5%88%86%E6%8A%A5%E5%91%8A/">https://mirror-ghost.netlify.app/2026/11/25/Strata模型与配置评分报告/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://mirror-ghost.netlify.app" target="_blank">镜中的幽灵小站</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Strata/">Strata</a><a class="post-meta__tags" href="/tags/%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2/">本地部署</a><a class="post-meta__tags" href="/tags/LLM/">LLM</a><a class="post-meta__tags" href="/tags/%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/">推理引擎</a><a class="post-meta__tags" href="/tags/%E8%AF%84%E6%B5%8B/">评测</a></div><div class="post-share"><div class="social-share" data-image="/images/header.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/01/21/CATIA_CAA_STP_Conversion_Guide/" title="CATIA CAA STP 文件转换指南"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">CATIA CAA STP 文件转换指南</div></div><div class="info-2"><div class="info-item-1">1. 概述本指南详细介绍了在 CATIA CAA (Component Application Architecture) 中如何将 CATIA 文件转换为 STP (STEP) 文件的方法。通过本指南，您将了解如何使用 CATIA CAA 提供的 API 来实现这一转换功能。 2. 必要的头文件在进行 STP 文件转换之前，需要包含以下头文件： 12345#include &lt;iostream&gt;#include &quot;CATDocumentServices.h&quot;#include &quot;CATDocument.h&quot;using namespace std;  3. 转换方法CATIA CAA 提供了两种方法来将 CATIA 文件转换为 STP 文件： 3.1 从文件路径转换以下是从文件路径转换 CATIA 文件为 STP 文件的步骤：  打开 CATIA 文档 123456CATDocument *pDoc;HRESULT hr = CATDocumentServices::Open(catiaFile, pDoc);if (FAILED(...</div></div></div></a></nav></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 镜中的幽灵</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.1"></script><script src="/js/main.js?v=5.5.1"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
