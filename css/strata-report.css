@@ -89,14 +89,14 @@ table.sr-table {
   min-width: 860px;
   border-collapse: separate;
   border-spacing: 0;
-  font-size: 13px;
+  font-size: 12.5px;
   border-top: 1px solid var(--sr-border);
   border-left: 1px solid var(--sr-border);
 }
 
 table.sr-table th,
 table.sr-table td {
-  padding: 7px 10px;
+  padding: 6px 7px;
   border-right: 1px solid var(--sr-border);
   border-bottom: 1px solid var(--sr-border);
   vertical-align: middle;
@@ -125,7 +125,7 @@ table.sr-table tbody td:first-child {
 
 .sr-table thead th:nth-child(8),
 .sr-table tbody td:nth-child(8) {
-  min-width: 116px;
+  min-width: 104px;
   white-space: nowrap;
 }
 
@@ -340,5 +340,5 @@ table.sr-table .sr-num {
 
 .post-content:has(#srMatrix) table th:first-child,
 .post-content:has(#srMatrix) table td:first-child {
-  min-width: 168px;
+  min-width: 148px;
 }
